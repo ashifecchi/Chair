@@ -165,14 +165,13 @@ public class Town {
     public void treasureTime() {
         if (isSearched) {
             System.out.println("You already searched this town");
+        } else if (hunter.hasItemInTreasure(treasure)) {
+            isSearched = true;
+            System.out.println("You already have this in your collection");
         } else if (!(treasure.equals("dust") && isSearched)) {
             System.out.println("You found a " + treasure + "!");
             hunter.addTreasure(treasure);
             isSearched = true;
-        } else if (hunter.hasItemInTreasure(treasure) && !isSearched) {
-            System.out.println("You found a " + treasure + "!");
-            isSearched = true;
-            System.out.println("You already have this in your collection");
         }
     }
 }

@@ -55,7 +55,7 @@ public class TreasureHunter {
             hardMode = true;
         } else if (hard.equals("test")) {
             hardMode = false;
-            hunter = new Hunter(name,  144);
+            hunter = new Hunter(name,  154);
             hunter.buyItem("water", 2);
             hunter.buyItem("rope", 4);
             hunter.buyItem("machete", 6);
