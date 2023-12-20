@@ -148,7 +148,10 @@ public class TreasureHunter {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else if (choice.equals("h")) {
             currentTown.treasureTime();
-
+            boolean fullOrNah = hunter.treasureCollectionIsFull();
+            if (fullOrNah == true) {
+                System.out.println("Congratulations, you have found the last of the three treasures, you win!");
+            }
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }

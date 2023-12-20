@@ -233,9 +233,18 @@ public class Hunter {
 
         return true;
     }
-    private boolean treasureCollectionIsEmpty() {
+    public boolean treasureCollectionIsEmpty() {
         for (String string : collectionOfTreasure) {
             if (string != null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public boolean treasureCollectionIsFull() {
+        for (String string : collectionOfTreasure) {
+            if (string == null) {
                 return false;
             }
         }
