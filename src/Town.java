@@ -12,6 +12,7 @@ public class Town {
     private String printMessage;
     private boolean toughTown;
     public static String treasure;
+    private boolean isSearched;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -159,5 +160,19 @@ public class Town {
     private boolean checkItemBreak() {
         double rand = Math.random();
         return (rand < 0.5);
+    }
+
+    public void treasureTime() {
+        if (isSearched) {
+            System.out.println("You already searched this town");
+        } else if (!(treasure.equals("dust") && isSearched)) {
+            System.out.println("You found a " + treasure + "!");
+            hunter.addTreasure(treasure);
+            isSearched = true;
+        } else if (hunter.hasItemInTreasure(treasure) && !isSearched) {
+            System.out.println("You found a " + treasure + "!");
+            isSearched = true;
+            System.out.println("You already have this in your collection");
+        }
     }
 }

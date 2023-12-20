@@ -20,7 +20,7 @@ public class Hunter {
     public Hunter(String hunterName, int startingGold) {
         this.hunterName = hunterName;
         kit = new String[6]; // only 6 possible items can be stored in kit
-        collectionOfTreasure = new String[4];
+        collectionOfTreasure = new String[3];
         gold = startingGold;
     }
 
@@ -106,7 +106,34 @@ public class Hunter {
 
         return false;
     }
+    public boolean addTreasure(String item) {
+        if (!hasItemInTreasure(item)) {
+            int idx = emptyPositionInTreasure();
+            collectionOfTreasure[idx] = item;
+            return true;
+        }
 
+        return false;
+    }
+    public boolean hasItemInTreasure(String item) {
+        for (String tmpItem : collectionOfTreasure) {
+            if (item.equals(tmpItem)) {
+                // early return
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private int emptyPositionInTreasure() {
+        for (int i = 0; i < collectionOfTreasure.length; i++) {
+            if (collectionOfTreasure[i] == null) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
     /**
      * Checks if the kit Array has the specified item.
      *
