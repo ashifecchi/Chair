@@ -174,10 +174,12 @@ public class Town {
         } else if (hunter.hasItemInTreasure(treasure)) {
             isSearched = true;
             System.out.println("You already have this in your collection");
-        } else if (!(treasure.equals("dust") && isSearched)) {
+        } else if ((!treasure.equals("dust") && (!isSearched))) {
             System.out.println("You found a " + treasure + "!");
             hunter.addTreasure(treasure);
             isSearched = true;
+        } else {
+            System.out.println("Dust! Cant add");
         }
     }
 }
