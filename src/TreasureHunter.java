@@ -9,13 +9,15 @@ import java.util.Scanner;
  */
 
 public class TreasureHunter {
+    public static boolean gameOver = false;
+    public static boolean SAMURAIMODE = false;
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
 
     // instance variables
     private Town currentTown;
     private Hunter hunter;
-    public static boolean gameOver = false;
+
     private boolean hardMode;
 
     /**
@@ -62,6 +64,8 @@ public class TreasureHunter {
             hunter.buyItem("horse", 12);
             hunter.buyItem("boat", 20);
             hunter.buyItem("boot", 10);
+        } else if (hard.equals("s")){
+            SAMURAIMODE = true;
         }
     }
 

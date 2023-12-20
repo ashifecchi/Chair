@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * The Town Class is where it all happens.
  * The Town is designed to manage all the things a Hunter can do in town.
@@ -114,7 +116,11 @@ public class Town {
         } else {
             printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n" + Colors.RESET;
             int goldDiff = (int) (Math.random() * 10) + 1;
-            if (Math.random() > noTroubleChance) {
+            if (TreasureHunter.SAMURAIMODE){
+                printMessage += Colors.RED + "君の剣がひとを殺された. また我らの日本の大勝利." + Colors.RESET;
+                printMessage += "Glory to the Shogun!";
+                hunter.changeGold(goldDiff);
+            } else if (Math.random() > noTroubleChance) {
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
                 printMessage += Colors.YELLOW + "\nYou won the brawl and receive " + goldDiff + " gold." + Colors.RESET;
                 hunter.changeGold(goldDiff);

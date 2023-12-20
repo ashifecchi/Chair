@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Scanner;
 
 /**
@@ -44,18 +45,23 @@ public class Shop {
         if (buyOrSell.equals("b")) {
             System.out.println("Welcome to the shop! We have the finest wares in town.");
             System.out.println("Currently we have the following items:");
-            System.out.println(inventory());
+            System.out.println(customer.getInventory());
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
-            if (cost == 0) {
-                System.out.println("We ain't got none of those.");
+            if (customer.hasItemInKit("sword") && TreasureHunter.SAMURAIMODE && inventory().contains(item)) {
+                System.out.println("\"Uh... Sir?\"\nYou rob him of his wares.\n");
+                customer.buyItem(item,0);
             } else {
-                System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
-                String option = SCANNER.nextLine().toLowerCase();
+                if (cost == 0 && !item.equals("sword") || !inventory().contains(item)) {
+                    System.out.println("We ain't got none of those.");
+                } else {
+                    System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
+                    String option = SCANNER.nextLine().toLowerCase();
 
-                if (option.equals("y")) {
-                    buyItem(item);
+                    if (option.equals("y")) {
+                        customer.buyItem(item,cost);
+                    }
                 }
             }
         } else {
@@ -70,7 +76,7 @@ public class Shop {
                 String option = SCANNER.nextLine().toLowerCase();
 
                 if (option.equals("y")) {
-                    sellItem(item);
+                    customer.sellItem(item, cost);
                 }
             }
         }
@@ -89,6 +95,9 @@ public class Shop {
         str += "Horse: " + HORSE_COST + " gold\n";
         str += "Boat: " + BOAT_COST + " gold\n";
         str += "Boots: " + BOOT_COST + " gold\n";
+        if (TreasureHunter.SAMURAIMODE && !customer.hasItemInKit("SWORD")){
+            str += "SWORD: FREE\n";
+        }
         return str;
     }
 
@@ -99,7 +108,7 @@ public class Shop {
      */
     public void buyItem(String item) {
         int costOfItem = checkMarketPrice(item, true);
-        if (customer.buyItem(item, costOfItem)) {
+        if (customer.buyItem(item, costOfItem) && !customer.hasItemInKit("sword")) {
             System.out.println("Ye' got yerself a " + item + ". Come again soon.");
         } else {
             System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
