@@ -161,7 +161,7 @@ public class Town {
         } else if (rnd < .8){
             return new Terrain("Jungle", "Machete");
         } else {
-            return new Terrain("Marsh", "Boots");
+            return new Terrain("Marsh", "Boot");
         }
     }
 

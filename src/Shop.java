@@ -57,14 +57,19 @@ public class Shop {
                     customer.buyItem(item, 0);
                 }
             } else {
-                if (cost == 0 && !item.equals("sword") || !inventory().contains(item)) {
+                if (cost == 0 && !item.equals("sword")) {
                     System.out.println("We ain't got none of those.");
                 } else {
                     System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
                     String option = SCANNER.nextLine().toLowerCase();
 
                     if (option.equals("y")) {
-                        customer.buyItem(item,cost);
+                        if (customer.hasItemInKit(item)){
+                            System.out.println("You already have this. ");
+                        }else {
+                            customer.buyItem(item, cost);
+                            System.out.println("You bopught a " + item);
+                        }
                     }
                 }
             }
@@ -98,7 +103,7 @@ public class Shop {
         str += "Machete: " + MACHETE_COST + " gold\n";
         str += "Horse: " + HORSE_COST + " gold\n";
         str += "Boat: " + BOAT_COST + " gold\n";
-        str += "Boots: " + BOOT_COST + " gold\n";
+        str += "Boot: " + BOOT_COST + " gold\n";
         if (TreasureHunter.SAMURAIMODE && !customer.hasItemInKit("SWORD")){
             str += "SWORD: FREE\n";
         }

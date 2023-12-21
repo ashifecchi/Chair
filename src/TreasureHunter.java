@@ -155,6 +155,7 @@ public class TreasureHunter {
             boolean fullOrNah = hunter.treasureCollectionIsFull();
             if (fullOrNah) {
                 System.out.println("Congratulations, you have found the last of the three treasures, you win!");
+                gameOver = true;
             }
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
