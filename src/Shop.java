@@ -68,7 +68,7 @@ public class Shop {
                             System.out.println("You already have this. ");
                         }else {
                             customer.buyItem(item, cost);
-                            System.out.println("You bopught a " + item);
+                            System.out.println("You bought a " + item);
                         }
                     }
                 }
