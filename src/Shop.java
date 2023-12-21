@@ -51,7 +51,11 @@ public class Shop {
             int cost = checkMarketPrice(item, true);
             if (TreasureHunter.SAMURAIMODE || customer.hasItemInKit("sword") && inventory().contains(item)) {
                 System.out.println("\"Uh... Sir?\"\nYou rob him of his wares.\n");
-                customer.buyItem(item,0);
+                if (customer.hasItemInKit(item)){
+                    System.out.println("You already have this. You discard it on the road. ");
+                } else {
+                    customer.buyItem(item, 0);
+                }
             } else {
                 if (cost == 0 && !item.equals("sword") || !inventory().contains(item)) {
                     System.out.println("We ain't got none of those.");

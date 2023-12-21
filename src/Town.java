@@ -95,6 +95,13 @@ public class Town {
      * @param choice If the user wants to buy or sell items at the shop.
      */
     public void enterShop(String choice) {
+        printMessage = "Welcome to town, " + hunter.getHunterName() + ".";
+
+        if (toughTown) {
+            printMessage += "\nIt's pretty rough around here, so watch yourself.";
+        } else {
+            printMessage += "\nWe're just a sleepy little town with mild mannered folk.";
+        }
         shop.enter(hunter, choice);
     }
 
@@ -118,7 +125,7 @@ public class Town {
             int goldDiff = (int) (Math.random() * 10) + 1;
             if (TreasureHunter.SAMURAIMODE){
                 printMessage += Colors.RED + "君の剣がひとを殺された. また我らの日本の大勝利." + Colors.RESET;
-                printMessage += "Glory to the Shogun!";
+                printMessage += "\nGlory to the Shogun!";
                 hunter.changeGold(goldDiff);
             } else if (Math.random() > noTroubleChance) {
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
