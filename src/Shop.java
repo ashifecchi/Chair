@@ -45,11 +45,11 @@ public class Shop {
         if (buyOrSell.equals("b")) {
             System.out.println("Welcome to the shop! We have the finest wares in town.");
             System.out.println("Currently we have the following items:");
-            System.out.println(customer.getInventory());
+            System.out.println(inventory());
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
-            if (customer.hasItemInKit("sword") && TreasureHunter.SAMURAIMODE && inventory().contains(item)) {
+            if (TreasureHunter.SAMURAIMODE || customer.hasItemInKit("sword") && inventory().contains(item)) {
                 System.out.println("\"Uh... Sir?\"\nYou rob him of his wares.\n");
                 customer.buyItem(item,0);
             } else {

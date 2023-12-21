@@ -153,7 +153,7 @@ public class TreasureHunter {
         } else if (choice.equals("h")) {
             currentTown.treasureTime();
             boolean fullOrNah = hunter.treasureCollectionIsFull();
-            if (fullOrNah == true) {
+            if (fullOrNah) {
                 System.out.println("Congratulations, you have found the last of the three treasures, you win!");
             }
         } else {
