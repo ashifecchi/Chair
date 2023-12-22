@@ -15,6 +15,7 @@ public class Shop {
     private static final int HORSE_COST = 12;
     private static final int BOAT_COST = 20;
     private static final int BOOT_COST = 10;
+    private static final int SHOVEL_COST = 8;
 
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -49,7 +50,7 @@ public class Shop {
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
-            if (TreasureHunter.SAMURAIMODE || customer.hasItemInKit("sword") && inventory().contains(item)) {
+            if (TreasureHunter.SAMURAIMODE || customer.hasItemInKit("sword") && inventory().toLowerCase().contains(item)) {
                 System.out.println("\"Uh... Sir?\"\nYou rob him of his wares.\n");
                 if (customer.hasItemInKit(item)){
                     System.out.println("You already have this. You discard it on the road. ");
@@ -105,6 +106,7 @@ public class Shop {
         str += "Horse: " + HORSE_COST + " gold\n";
         str += "Boat: " + BOAT_COST + " gold\n";
         str += "Boot: " + BOOT_COST + " gold\n";
+        str += "Shovel: " + SHOVEL_COST + " gold\n";
         if (TreasureHunter.SAMURAIMODE && !customer.hasItemInKit("SWORD")){
             str += "SWORD: FREE\n";
         }

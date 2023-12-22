@@ -52,7 +52,7 @@ public class TreasureHunter {
         // set hunter instance variable
         hunter = new Hunter(name, 10);
 
-        System.out.print("Hard mode? (e/n/h): ");
+        System.out.print("Difficulty? (e/n/h): ");
         hard = SCANNER.nextLine().toLowerCase();
         if (hard.equals("h")) {
             hardMode = true;
@@ -132,6 +132,7 @@ public class TreasureHunter {
                 System.out.println("(M)ove on to a different town.");
                 System.out.println("(L)ook for trouble!");
                 System.out.println("(H)unt for treasure!");
+                System.out.println("(D)ig for gold.");
                 System.out.println("Give up the hunt and e(X)it.");
                 System.out.println();
                 System.out.print("What's your next move? ");
@@ -172,6 +173,8 @@ public class TreasureHunter {
                 System.out.println("Congratulations, you have found the last of the three treasures, you win!");
                 gameOver = true;
             }
+        } else if (choice.equals("d")){
+            currentTown.digForTreasure(hunter);
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }

@@ -15,6 +15,7 @@ public class Town {
     private boolean toughTown;
     public static String treasure;
     private boolean isSearched;
+    private boolean isDug;
     private boolean easy;
 
     /**
@@ -208,13 +209,32 @@ public class Town {
             System.out.println("You already searched this town");
         } else if (hunter.hasItemInTreasure(treasure)) {
             isSearched = true;
-            System.out.println("You already have this in your collection");
+            System.out.println("You found a(n) "+treasure + "...which you already have.\nYou half-heartedly rebury it in the dry soil.");
         } else if ((!treasure.equals("dust") && (!isSearched))) {
             System.out.println("You found a " + treasure + "!");
             hunter.addTreasure(treasure);
             isSearched = true;
         } else {
-            System.out.println("Dust! Cant add");
+            System.out.println("Dust! It irritates your eyes mockingly.\n");
+        }
+    }
+    public void digForTreasure(Hunter hunter){
+        if (!hunter.hasItemInTreasure("shovel")){
+            System.out.println("Despite how well you think you can, you fail miserably at making any progress digging with your hands.\nYou're going to need something bigger.\n");
+        } else {
+            if (isDug) {
+                System.out.println("The dirt has been completely displaced.\nNo point in digging more.\n");
+            } else {
+                double chance = Math.random();
+                if (chance >= .5) {
+                    int goldFound = (int) (Math.random() * 20 + 1);
+                    hunter.changeGold(goldFound);
+                    System.out.println("Your shovel hits something... gold!\nYou happily add the " + goldFound + " gold to your money sack.\n");
+                } else {
+                    System.out.println("You couldn't find a single thing despite overturning the entire town.\n");
+                }
+                isDug = true;
+            }
         }
     }
 }
