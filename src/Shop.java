@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 
 /**
@@ -16,6 +17,8 @@ public class Shop {
     private static final int BOAT_COST = 20;
     private static final int BOOT_COST = 10;
     private static final int SHOVEL_COST = 8;
+    private OutputWindow window;
+
 
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -29,7 +32,8 @@ public class Shop {
      *
      * @param markdown Percentage of markdown for selling items in decimal format.
      */
-    public Shop(double markdown) {
+    public Shop(double markdown, OutputWindow window) {
+        this.window = window;
         this.markdown = markdown;
         customer = null; // is set in the enter method
     }
@@ -44,45 +48,47 @@ public class Shop {
         customer = hunter;
 
         if (buyOrSell.equals("b")) {
-            System.out.println("Welcome to the shop! We have the finest wares in town.");
-            System.out.println("Currently we have the following items:");
-            System.out.println(inventory());
-            System.out.print("What're you lookin' to buy? ");
+            window.addTextToWindow("\nWelcome to the shop! We have the finest wares in town.", Color.blue);
+            window.addTextToWindow("\nCurrently we have the following items:", Color.blue);
+            window.addTextToWindow(inventory(), Color.MAGENTA);
+            window.addTextToWindow("\nWhat're you lookin' to buy? ", Color.red);
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
             if (TreasureHunter.SAMURAIMODE || customer.hasItemInKit("sword") && inventory().toLowerCase().contains(item)) {
-                System.out.println("\"Uh... Sir?\"\nYou rob him of his wares.\n");
+                window.addTextToWindow("\"Uh... Sir?\"\nYou rob him of his wares.\n", Color.pink);
                 if (customer.hasItemInKit(item)){
-                    System.out.println("You already have this. You discard it on the road. ");
+                    window.addTextToWindow("\nYou already have this. You discard it on the road. ", Color.ORANGE);
                 } else {
                     customer.buyItem(item, 0);
                 }
             } else {
                 if (cost == 0 && !item.equals("sword")) {
-                    System.out.println("We ain't got none of those.");
+                    window.addTextToWindow("\nWe ain't got none of those.", Color.GREEN);
                 } else {
-                    System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
+                    window.addTextToWindow("\nIt'll cost you " + cost + " gold. Buy it (y/n)? ", Color.yellow);
                     String option = SCANNER.nextLine().toLowerCase();
 
                     if (option.equals("y")) {
                         if (customer.hasItemInKit(item)){
-                            System.out.println("You already have this. ");
+                            window.addTextToWindow("\nYou already have this. ", Color.gray);
                         }else {
                             customer.buyItem(item, cost);
-                            System.out.println("You bought a " + item);
+                            String bought = "\nYou bought a " + item;
+                            window.addTextToWindow(bought, Color.darkGray);
                         }
                     }
                 }
             }
         } else {
-            System.out.println("What're you lookin' to sell? ");
-            System.out.print("You currently have the following items: " + customer.getInventory());
+            window.addTextToWindow("\nWhat're you lookin' to sell? ", Color.blue);
+            window.addTextToWindow("\nYou currently have the following items: ", Color.black);
+            customer.printInventory();
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, false);
             if (cost == 0) {
-                System.out.println("We don't want none of those.");
+                window.addTextToWindow("\nWe don't want none of those.", Color.ORANGE);
             } else {
-                System.out.print("It'll get you " + cost + " gold. Sell it (y/n)? ");
+                window.addTextToWindow("\nIt'll get you " + cost + " gold. Sell it (y/n)? ", Color.lightGray);
                 String option = SCANNER.nextLine().toLowerCase();
 
                 if (option.equals("y")) {
@@ -90,7 +96,7 @@ public class Shop {
                 }
             }
         }
-        System.out.println("You left the shop. \n");
+        window.addTextToWindow("\nYou left the shop. \n", Color.darkGray);
     }
 
     /**
@@ -121,9 +127,10 @@ public class Shop {
     public void buyItem(String item) {
         int costOfItem = checkMarketPrice(item, true);
         if (customer.buyItem(item, costOfItem) && !customer.hasItemInKit("sword")) {
-            System.out.println("Ye' got yerself a " + item + ". Come again soon.");
+            String strn = "\nYe' got yerself a " + item + ". Come again soon.\n";
+            window.addTextToWindow(strn, Color.red);
         } else {
-            System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
+            window.addTextToWindow("\nHmm, either you don't have enough gold or you've already got one of those!", Color.GREEN);
         }
     }
 
@@ -135,9 +142,9 @@ public class Shop {
     public void sellItem(String item) {
         int buyBackPrice = checkMarketPrice(item, false);
         if (customer.sellItem(item, buyBackPrice)) {
-            System.out.println("Pleasure doin' business with you.");
+            window.addTextToWindow("\nPleasure doin' business with you.", Color.ORANGE);
         } else {
-            System.out.println("Stop stringin' me along!");
+            window.addTextToWindow("\nStop stringin' me along!", Color.GREEN);
         }
     }
 
@@ -175,6 +182,8 @@ public class Shop {
             return BOAT_COST;
         } else if (item.equals("boot")){
             return BOOT_COST;
+        } else if (item.equals("shovel")){
+            return SHOVEL_COST;
         } else {
             return 0;
         }

@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Hunter Class<br /><br />
  * This class represents the treasure hunter character (the player) in the Treasure Hunt game.
@@ -6,10 +8,12 @@
 
 public class Hunter {
     //instance variables
-    private String hunterName;
+    public String hunterName;
     private String[] kit;
     private String[] collectionOfTreasure;
-    private static int gold;
+    public static int gold;
+    private OutputWindow window;
+
 
     /**
      * The base constructor of a Hunter assigns the name to the hunter and an empty kit.
@@ -17,7 +21,7 @@ public class Hunter {
      * @param hunterName The hunter's name.
      * @param startingGold The gold the hunter starts with.
      */
-    public Hunter(String hunterName, int startingGold) {
+    public Hunter(String hunterName, int startingGold, OutputWindow window) {
         this.hunterName = hunterName;
         if (TreasureHunter.SAMURAIMODE){
             kit = new String[8];
@@ -26,6 +30,7 @@ public class Hunter {
         }
         collectionOfTreasure = new String[3];
         gold = startingGold;
+        this.window = window;
     }
 
     //Accessors
@@ -165,8 +170,8 @@ public class Hunter {
      *
      * @return The printable String representation of the inventory.
      */
-    public String getInventory() {
-        String printableKit = "" + Colors.PURPLE;
+    public void printInventory() {
+        String printableKit = "" ;
         String space = " ";
 
         for (String item : kit) {
@@ -174,9 +179,8 @@ public class Hunter {
                 printableKit += item + space;
             }
         }
-        printableKit += Colors.RESET;
-
-        return printableKit;
+        Color purple = new Color(120,24,74); // RGB!
+        window.addTextToWindow(printableKit, purple);
     }
     public String getTreasures() {
         String printableTreasure = "" + Colors.YELLOW;
@@ -190,6 +194,19 @@ public class Hunter {
         printableTreasure += Colors.RESET;
 
         return printableTreasure;
+    }
+    public String getInventory() {
+        String printableKit = "" + Colors.PURPLE;
+        String space = " ";
+
+        for (String item : kit) {
+            if (item != null) {
+                printableKit += item + space;
+            }
+        }
+        printableKit += Colors.RESET;
+
+        return printableKit;
     }
 
     /**
